@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { BUILD_SITE_URL } from "@/lib/site-url";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   if (!BUILD_SITE_URL) return [];
   return [

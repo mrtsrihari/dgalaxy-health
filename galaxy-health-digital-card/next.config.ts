@@ -16,13 +16,14 @@ const resolvedSiteUrl =
     : "");
 
 const nextConfig: NextConfig = {
+  output: "export",
   reactStrictMode: true,
   poweredByHeader: false,
   env: {
     NEXT_PUBLIC_RESOLVED_SITE_URL: resolvedSiteUrl.replace(/\/$/, ""),
   },
   images: {
-    formats: ["image/avif", "image/webp"],
+    unoptimized: true,
   },
 };
 
