@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+/* Tamil-only overrides: `ta:text-xl` applies when the page language is Tamil. */
+@custom-variant ta (&:where(:lang(ta), :lang(ta) *));
+
+@theme {
+  --font-sans: "Plus Jakarta Sans Variable", "Noto Sans Tamil Variable", ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Deep navy scale — the brand's anchor colour */
+  --color-navy-50: #f3f6fb;
+  --color-navy-100: #e4ebf5;
+  --color-navy-200: #c8d5e9;
+  --color-navy-300: #9fb4d6;
+  --color-navy-400: #6d8cbd;
+  --color-navy-500: #4a6ba1;
+  --color-navy-600: #345287;
+  --color-navy-700: #26406d;
+  --color-navy-800: #182d52;
+  --color-navy-900: #0f1f3d;
+  --color-navy-950: #081329;
+
+  /* Restrained accent blue for actions and highlights */
+  --color-accent-50: #eef4ff;
+  --color-accent-100: #dce8ff;
+  --color-accent-200: #b9d0ff;
+  --color-accent-300: #8eb3ff;
+  --color-accent-400: #6293fb;
+  --color-accent-500: #3f75f2;
+  --color-accent-600: #2c5ee0;
+  --color-accent-700: #234bb8;
+
+  --color-whatsapp: #1fa855;
+  --color-whatsapp-dark: #168a45;
+
+  --shadow-card: 0 1px 2px rgb(8 19 41 / 0.04), 0 8px 24px -12px rgb(8 19 41 / 0.12);
+  --shadow-card-hover: 0 2px 4px rgb(8 19 41 / 0.05), 0 18px 40px -16px rgb(8 19 41 / 0.22);
+  --shadow-hero: 0 30px 60px -30px rgb(8 19 41 / 0.55), 0 12px 24px -12px rgb(8 19 41 / 0.3);
+
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 4.5rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  body {
+    @apply bg-navy-50 text-navy-900 antialiased;
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+  }
+  /* Tamil script needs more vertical room for vowel signs */
+  :lang(ta) body { line-height: 1.7; }
+  :lang(ta) h1, :lang(ta) h2, :lang(ta) h3 { line-height: 1.35; letter-spacing: 0; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-500);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .on-dark :focus-visible { outline-color: var(--color-accent-300); }
+
+  ::selection { background: var(--color-accent-100); color: var(--color-navy-950); }
+
+  dialog::backdrop { background: rgb(8 19 41 / 0.6); backdrop-filter: blur(4px); }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[0.72rem] font-semibold tracking-[0.14em] text-accent-600 uppercase;
+  }
+  :lang(ta) .eyebrow { @apply text-xs tracking-normal normal-case; }
+  .eyebrow::before {
+    content: "";
+    @apply h-px w-5 bg-current opacity-60;
+  }
+  .section-title {
+    @apply mt-3 text-2xl font-semibold tracking-tight text-navy-950 sm:text-3xl;
+  }
+  :lang(ta) .section-title { @apply text-xl sm:text-2xl; }
+
+  .btn {
+    @apply inline-flex min-h-11 [&>svg]:shrink-0 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold whitespace-nowrap transition duration-200 select-none active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60;
+  }
+  :lang(ta) .btn { @apply whitespace-normal text-center leading-snug; }
+
+  .field-label { @apply mb-1.5 block text-sm font-medium text-navy-800; }
+  .field {
+    @apply block w-full rounded-xl border border-navy-200 bg-white px-3.5 py-3 text-base text-navy-950 shadow-[inset_0_1px_1px_rgb(8_19_41/0.04)] transition placeholder:text-navy-300 hover:border-navy-300 focus:border-accent-500 focus:ring-4 focus:ring-accent-100 focus:outline-none;
+  }
+  .field[aria-invalid="true"] { @apply border-red-400 focus:border-red-500 focus:ring-red-100; }
+  .field-error { @apply mt-1.5 flex items-start gap-1.5 text-sm text-red-700; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
